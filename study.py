@@ -1,10 +1,11 @@
-import numpy as np
-import os
+"""Кольцевой дек фиксированной вместимости и интерактивное меню."""
 
 class Deque:
     def __init__(self, size):
+        if size <= 0:
+            raise ValueError("Размер дека должен быть положительным")
         self.max_size = size
-        self.array = np.zeros(size, dtype=int)
+        self.array = [None] * size
         self.head = 0
         self.tail = 0
         self.count = 0
@@ -41,6 +42,7 @@ class Deque:
             return None
         
         value = self.array[self.head]
+        self.array[self.head] = None
         self.head = (self.head + 1) % self.max_size
         self.count -= 1
         print(f"Удалено {value} из начала")
@@ -53,6 +55,7 @@ class Deque:
         
         self.tail = (self.tail - 1) % self.max_size
         value = self.array[self.tail]
+        self.array[self.tail] = None
         self.count -= 1
         print(f"Удалено {value} из конца")
         return value
